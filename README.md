@@ -5,44 +5,56 @@
 ![Status](https://img.shields.io/badge/status-demo%20ready-2ea44f?style=flat-square)
 ![License](https://img.shields.io/badge/license-TBD-lightgrey?style=flat-square)
 
-Aplikasi web Bimbingan Konseling berbasis PHP dan MySQL untuk membantu sekolah mengelola konsultasi siswa, jadwal BK, catatan perkembangan, monitoring orang tua, dan administrasi layanan konseling.
+Aplikasi web Bimbingan Konseling berbasis PHP native untuk membantu sekolah mengelola layanan konsultasi siswa, jadwal konseling, catatan perkembangan, pelanggaran, komunikasi orang tua, dan administrasi data BK.
 
-Project ini dibuat sederhana agar mudah dipelajari, dijalankan secara lokal, dan dikembangkan kembali. Jika MySQL belum tersedia, aplikasi tetap bisa dicoba menggunakan data demo JSON.
+Project ini dapat dijalankan dengan MySQL atau langsung memakai data demo JSON, sehingga cocok untuk demo, pembelajaran, dan pengembangan awal sistem informasi sekolah.
 
 ## Daftar Isi
 
-- [Fitur Utama](#fitur-utama)
-- [Tech Stack](#tech-stack)
+- [Fitur](#fitur)
+- [Hak Akses](#hak-akses)
+- [Teknologi](#teknologi)
 - [Struktur Project](#struktur-project)
 - [Persyaratan](#persyaratan)
-- [Quick Start](#quick-start)
+- [Instalasi](#instalasi)
 - [Konfigurasi Database](#konfigurasi-database)
 - [Akun Demo](#akun-demo)
-- [Alur Pengembangan](#alur-pengembangan)
-- [Kontribusi](#kontribusi)
-- [Keamanan](#keamanan)
+- [Validasi Cepat](#validasi-cepat)
+- [Catatan Keamanan](#catatan-keamanan)
 - [Roadmap](#roadmap)
 - [Lisensi](#lisensi)
 
-## Fitur Utama
+## Fitur
 
-- Landing page informatif untuk layanan BK sekolah.
-- Login dan dashboard berdasarkan role pengguna.
-- Role siswa, orang tua, guru BK, dan admin.
-- Pengajuan konsultasi siswa.
-- Chat/pesan antara siswa, orang tua, dan guru BK.
-- Verifikasi status konsultasi dan penjadwalan sesi BK.
-- Catatan perkembangan siswa.
+- Landing page profil layanan BK sekolah.
+- Login dan dashboard sesuai role pengguna.
+- Pengajuan konsultasi oleh siswa.
+- Verifikasi status konsultasi oleh guru BK.
+- Penjadwalan sesi konseling.
+- Riwayat konseling siswa.
+- Chat atau pesan antara siswa, orang tua, dan guru BK.
+- Monitoring perkembangan anak untuk orang tua.
+- Catatan perkembangan siswa oleh guru BK.
 - Pencatatan pelanggaran dan poin kedisiplinan.
 - Notifikasi internal untuk pengguna.
 - Manajemen user dan data siswa oleh admin.
-- Backup data demo dalam format JSON.
-- Fallback data lokal melalui `database/demo-data.json` jika MySQL belum aktif.
+- Cetak laporan BK melalui fitur print browser.
+- Backup data ke file JSON.
+- Mode demo tanpa MySQL melalui `database/demo-data.json`.
 
-## Tech Stack
+## Hak Akses
+
+| Role | Akses Utama |
+| --- | --- |
+| Siswa | Mengajukan konsultasi, melihat jadwal, membuka riwayat, membaca notifikasi, dan mengirim pesan ke guru BK. |
+| Orang tua | Memantau data anak, melihat riwayat konseling, menerima notifikasi, dan berkomunikasi dengan guru BK. |
+| Guru BK | Mengelola konsultasi, membuat jadwal, menulis catatan perkembangan, mencatat pelanggaran, dan mencetak laporan. |
+| Admin | Mengelola akun pengguna, data siswa, statistik sistem, dan backup data. |
+
+## Teknologi
 
 - PHP native
-- MySQL
+- MySQL atau MariaDB
 - PDO prepared statement
 - HTML, CSS, dan JavaScript tanpa framework frontend
 - JSON datastore untuk mode demo lokal
@@ -60,9 +72,9 @@ Project ini dibuat sederhana agar mudah dipelajari, dijalankan secara lokal, dan
 |-- config/
 |   `-- database.php
 |-- database/
-|   |-- schema.sql
+|   |-- demo-data.json
 |   |-- mysql_bk_100_siswa_100_ortu_15_guru_1_admin.sql
-|   `-- demo-data.json
+|   `-- schema.sql
 |-- public/
 |   |-- assets/
 |   |-- action.php
@@ -76,38 +88,37 @@ Project ini dibuat sederhana agar mudah dipelajari, dijalankan secara lokal, dan
 
 ## Persyaratan
 
-- PHP 8.x atau versi yang kompatibel dengan typed property dan syntax modern PHP.
-- MySQL 8.x atau MariaDB yang kompatibel.
-- Ekstensi PHP `pdo_mysql` jika ingin memakai database MySQL.
+- PHP 8.x
+- MySQL 8.x atau MariaDB, opsional untuk mode demo JSON
+- Ekstensi PHP `pdo_mysql`, hanya dibutuhkan jika memakai database MySQL
+- Web browser modern
 
-Untuk mencoba tampilan dan flow dasar, MySQL tidak wajib karena aplikasi dapat memakai `database/demo-data.json`.
-
-## Quick Start
+## Instalasi
 
 Clone repository:
 
 ```bash
-git clone <repository-url>
-cd <nama-folder-project>
+git clone https://github.com/sohibulakrom3-ship-it/bimbingan-konserling.git
+cd bimbingan-konserling
 ```
 
-Jalankan server lokal PHP:
+Jalankan server development PHP:
 
 ```bash
 php -S localhost:8000 -t public
 ```
 
-Buka aplikasi di browser:
+Buka aplikasi:
 
 ```text
 http://localhost:8000
 ```
 
-Jika MySQL belum dikonfigurasi, aplikasi akan memakai data demo lokal dari `database/demo-data.json`.
+Jika MySQL belum aktif atau konfigurasi database belum sesuai, aplikasi tetap dapat berjalan memakai data demo dari `database/demo-data.json`.
 
 ## Konfigurasi Database
 
-Konfigurasi koneksi ada di `config/database.php` dan dapat diatur melalui environment variable berikut:
+Konfigurasi koneksi database berada di `config/database.php`. Nilainya dapat diubah melalui environment variable berikut:
 
 | Variable | Default | Keterangan |
 | --- | --- | --- |
@@ -117,34 +128,19 @@ Konfigurasi koneksi ada di `config/database.php` dan dapat diatur melalui enviro
 | `DB_USERNAME` | `root` | Username database |
 | `DB_PASSWORD` | kosong | Password database |
 
-### Import Data Minimal
+Import skema dasar:
 
 ```bash
 mysql -u root -p < database/schema.sql
 ```
 
-### Import Data Lengkap
-
-File berikut berisi data lebih lengkap untuk kebutuhan demo:
+Import data demo lengkap:
 
 ```bash
 mysql -u root -p < database/mysql_bk_100_siswa_100_ortu_15_guru_1_admin.sql
 ```
 
-### Contoh Environment Variable
-
-Linux/macOS:
-
-```bash
-export DB_HOST=127.0.0.1
-export DB_PORT=3306
-export DB_DATABASE=bk_muhammadiyah
-export DB_USERNAME=root
-export DB_PASSWORD=secret
-php -S localhost:8000 -t public
-```
-
-Windows PowerShell:
+Contoh konfigurasi di Windows PowerShell:
 
 ```powershell
 $env:DB_HOST="127.0.0.1"
@@ -155,15 +151,26 @@ $env:DB_PASSWORD="secret"
 php -S localhost:8000 -t public
 ```
 
+Contoh konfigurasi di Linux atau macOS:
+
+```bash
+export DB_HOST=127.0.0.1
+export DB_PORT=3306
+export DB_DATABASE=bk_muhammadiyah
+export DB_USERNAME=root
+export DB_PASSWORD=secret
+php -S localhost:8000 -t public
+```
+
 ## Akun Demo
 
-Semua akun demo memakai password:
+Semua akun demo menggunakan password:
 
 ```text
 password
 ```
 
-Jika memakai `database/schema.sql`:
+Data minimal dari `database/schema.sql`:
 
 | Role | Email |
 | --- | --- |
@@ -172,7 +179,7 @@ Jika memakai `database/schema.sql`:
 | Guru BK | `guru@bk.test` |
 | Admin | `admin@bk.test` |
 
-Jika memakai `database/mysql_bk_100_siswa_100_ortu_15_guru_1_admin.sql`:
+Data lengkap dari `database/mysql_bk_100_siswa_100_ortu_15_guru_1_admin.sql`:
 
 | Role | Email |
 | --- | --- |
@@ -181,15 +188,9 @@ Jika memakai `database/mysql_bk_100_siswa_100_ortu_15_guru_1_admin.sql`:
 | Guru BK | `guru01@bk.test` sampai `guru15@bk.test` |
 | Admin | `admin@bk.test` |
 
-## Alur Pengembangan
+## Validasi Cepat
 
-1. Buat branch baru dari branch utama.
-2. Jalankan aplikasi secara lokal.
-3. Uji perubahan melalui role yang terdampak.
-4. Pastikan tidak ada error PHP saat membuka halaman utama, login, dan dashboard.
-5. Kirim pull request dengan deskripsi perubahan yang jelas.
-
-Contoh pemeriksaan cepat:
+Jalankan pengecekan syntax PHP sebelum push perubahan:
 
 ```bash
 php -l app/Auth.php
@@ -197,29 +198,19 @@ php -l app/Database.php
 php -l app/DataStore.php
 php -l public/action.php
 php -l public/dashboard.php
+php -l public/index.php
+php -l public/login.php
 ```
 
-## Kontribusi
+Alur uji manual yang disarankan:
 
-Kontribusi sangat terbuka untuk perbaikan bug, peningkatan UI, validasi form, dokumentasi, dan pengembangan modul baru.
+1. Buka halaman utama.
+2. Login sebagai siswa dan ajukan konsultasi.
+3. Login sebagai guru BK dan ubah status konsultasi.
+4. Login sebagai orang tua dan cek monitoring anak.
+5. Login sebagai admin dan cek daftar user serta data siswa.
 
-Sebelum mengirim pull request:
-
-- Jelaskan masalah atau fitur yang diselesaikan.
-- Buat perubahan sekecil mungkin sesuai kebutuhan.
-- Hindari mengubah file data demo jika tidak diperlukan.
-- Sertakan langkah uji manual pada deskripsi pull request.
-- Pastikan perubahan tidak merusak flow login dan dashboard multi-role.
-
-Contoh judul pull request:
-
-```text
-feat: tambah filter status konsultasi guru BK
-fix: validasi email saat admin membuat user
-docs: perbarui instruksi setup database
-```
-
-## Keamanan
+## Catatan Keamanan
 
 Beberapa praktik keamanan yang sudah diterapkan:
 
@@ -227,29 +218,47 @@ Beberapa praktik keamanan yang sudah diterapkan:
 - Login diverifikasi menggunakan `password_verify`.
 - Query database memakai PDO prepared statement.
 - Form POST dilindungi CSRF token.
-- Output HTML menggunakan escaping helper.
-- Akses aksi dashboard dibatasi berdasarkan role.
+- Output HTML memakai escaping helper.
+- Aksi dashboard dibatasi berdasarkan role.
 
-Jika menemukan celah keamanan, jangan membuat issue publik berisi detail eksploit. Hubungi maintainer project terlebih dahulu atau buat laporan privat jika platform repository mendukungnya.
+Untuk penggunaan produksi, disarankan menambahkan HTTPS, konfigurasi session yang lebih ketat, validasi server-side yang lebih lengkap, audit permission per modul, dan backup database terjadwal.
 
 ## Roadmap
 
 - [ ] Menambahkan file `LICENSE`.
-- [ ] Menambahkan panduan deployment.
-- [ ] Menambahkan automated test untuk helper, auth, dan datastore.
-- [ ] Menambahkan migrasi database yang lebih terstruktur.
-- [ ] Menambahkan pagination dan pencarian untuk data besar.
-- [ ] Menambahkan export laporan yang lebih lengkap.
-- [ ] Menambahkan dokumentasi API internal jika modul dipisah.
+- [ ] Menambahkan panduan deployment ke hosting.
+- [ ] Menambahkan pagination dan pencarian data.
+- [ ] Menambahkan export laporan dalam format PDF atau Excel.
+- [ ] Menambahkan automated test untuk auth, helper, dan datastore.
+- [ ] Menambahkan migrasi database yang lebih rapi.
+- [ ] Menambahkan halaman profil pengguna.
+- [ ] Menambahkan pengaturan sekolah dan tahun ajaran.
+
+## Kontribusi
+
+Kontribusi terbuka untuk perbaikan bug, dokumentasi, peningkatan UI, validasi form, dan pengembangan modul baru.
+
+Sebelum membuat pull request:
+
+- Gunakan branch terpisah untuk setiap fitur atau perbaikan.
+- Jelaskan perubahan dengan singkat dan jelas.
+- Pastikan halaman utama, login, dan dashboard tetap berjalan.
+- Sertakan langkah uji manual pada deskripsi pull request.
+
+Contoh format commit:
+
+```text
+feat: tambah filter status konsultasi
+fix: validasi email saat tambah user
+docs: perbarui instruksi instalasi
+```
 
 ## Lisensi
 
-Lisensi project belum ditentukan karena file `LICENSE` belum tersedia di repository.
+Lisensi project belum ditentukan karena file `LICENSE` belum tersedia.
 
-Jika project ini akan dibuka untuk publik, disarankan menambahkan lisensi open source seperti MIT, Apache-2.0, atau GPL-3.0 sesuai kebutuhan distribusi dan kontribusi.
+Jika project akan dibuka untuk publik, tambahkan lisensi open source seperti MIT, Apache-2.0, atau GPL-3.0 sesuai kebutuhan.
 
 ## Maintainer
 
 Project ini dikembangkan untuk kebutuhan Sistem Informasi Bimbingan Konseling SMP Muhammadiyah Cileungsi.
-
-Issue, diskusi, dan pull request dapat digunakan untuk melacak pengembangan berikutnya setelah repository dipublikasikan.
