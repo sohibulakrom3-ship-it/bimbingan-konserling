@@ -1,0 +1,12 @@
+# Local environment
+.env
+
+# Runtime/generated files
+database/backup-*.json
+database/backup-db-*.json
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

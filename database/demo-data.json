@@ -1,0 +1,184 @@
+{
+    "meta": {
+        "updated_at": "2026-05-14 10:25:02"
+    },
+    "users": [
+        {
+            "id": 1,
+            "name": "Aisyah Ramadhani",
+            "email": "siswa@bk.test",
+            "password": "$2y$10$UDI6qhh0qtSyKGUidXCKAeq6UTSj.XpU0Uh9JxzTWYE7D0Qaj6et6",
+            "role": "siswa",
+            "status": "active"
+        },
+        {
+            "id": 2,
+            "name": "Ibu Nurul",
+            "email": "ortu@bk.test",
+            "password": "$2y$10$UDI6qhh0qtSyKGUidXCKAeq6UTSj.XpU0Uh9JxzTWYE7D0Qaj6et6",
+            "role": "orang_tua",
+            "status": "active"
+        },
+        {
+            "id": 3,
+            "name": "Pak Ahmad Fauzi",
+            "email": "guru@bk.test",
+            "password": "$2y$10$UDI6qhh0qtSyKGUidXCKAeq6UTSj.XpU0Uh9JxzTWYE7D0Qaj6et6",
+            "role": "guru_bk",
+            "status": "active"
+        },
+        {
+            "id": 4,
+            "name": "Admin Sekolah",
+            "email": "admin@bk.test",
+            "password": "$2y$10$UDI6qhh0qtSyKGUidXCKAeq6UTSj.XpU0Uh9JxzTWYE7D0Qaj6et6",
+            "role": "admin",
+            "status": "active"
+        },
+        {
+            "name": "User Tes",
+            "email": "tes152502@bk.test",
+            "password": "$2y$10$nLB6una0Jk4gSLClmspa..bdPmw5DkXjt6QhMMmymq22nOx2ywz7m",
+            "role": "siswa",
+            "status": "active",
+            "id": 5,
+            "created_at": "2026-05-14 10:25:02"
+        }
+    ],
+    "students": [
+        {
+            "id": 1,
+            "user_id": 1,
+            "nis": "2425001",
+            "name": "Aisyah Ramadhani",
+            "class_name": "VIII A",
+            "guardian_name": "Ibu Nurul",
+            "status": "Aktif"
+        }
+    ],
+    "parent_student": [
+        {
+            "id": 1,
+            "parent_user_id": 2,
+            "student_id": 1,
+            "relation": "Ibu"
+        }
+    ],
+    "consultations": [
+        {
+            "id": 1,
+            "student_id": 1,
+            "user_id": 1,
+            "topic": "Manajemen waktu belajar",
+            "message": "Saya ingin mengatur jadwal belajar lebih baik.",
+            "preferred_date": "2026-05-15",
+            "status": "approved",
+            "response": "Silakan hadir di ruang BK setelah istirahat pertama.",
+            "created_at": "2026-05-14 10:23:28"
+        },
+        {
+            "student_id": 1,
+            "user_id": 1,
+            "topic": "Tes konsultasi fitur",
+            "message": "Saya ingin memastikan fitur konsultasi berjalan dengan baik.",
+            "preferred_date": "2026-05-20",
+            "status": "pending",
+            "response": "",
+            "id": 2,
+            "created_at": "2026-05-14 10:24:10"
+        }
+    ],
+    "schedules": [
+        {
+            "id": 1,
+            "consultation_id": 1,
+            "student_id": 1,
+            "counselor_id": 3,
+            "schedule_at": "2026-05-15 09:30:00",
+            "status": "scheduled",
+            "notes": "Sesi awal pemetaan kebiasaan belajar."
+        }
+    ],
+    "notes": [
+        {
+            "id": 1,
+            "student_id": 1,
+            "counselor_id": 3,
+            "title": "Perkembangan awal",
+            "body": "Siswa mulai menyusun prioritas tugas harian.",
+            "created_at": "2026-05-14 10:23:28"
+        },
+        {
+            "student_id": 1,
+            "counselor_id": 3,
+            "title": "Tes catatan guru",
+            "body": "Catatan perkembangan berhasil diuji dari menu guru BK.",
+            "id": 2,
+            "created_at": "2026-05-14 10:24:37"
+        }
+    ],
+    "violations": [
+        {
+            "id": 1,
+            "student_id": 1,
+            "recorded_by": 3,
+            "category": "Kedisiplinan",
+            "description": "Terlambat masuk kelas.",
+            "point": 5,
+            "incident_date": "2026-05-11",
+            "created_at": "2026-05-14 10:23:28"
+        },
+        {
+            "student_id": 1,
+            "recorded_by": 3,
+            "category": "Tes",
+            "description": "Pelanggaran uji coba menu guru BK",
+            "point": 1,
+            "incident_date": "2026-05-14",
+            "id": 2,
+            "created_at": "2026-05-14 10:24:37"
+        }
+    ],
+    "notifications": [
+        {
+            "id": 1,
+            "user_id": 1,
+            "title": "Jadwal disetujui",
+            "body": "Konsultasi manajemen waktu belajar sudah dijadwalkan.",
+            "read_at": null,
+            "created_at": "2026-05-14 10:23:28"
+        },
+        {
+            "id": 2,
+            "user_id": 2,
+            "title": "Informasi perkembangan",
+            "body": "Ananda mendapat jadwal konsultasi BK minggu ini.",
+            "read_at": null,
+            "created_at": "2026-05-14 10:23:28"
+        },
+        {
+            "user_id": 3,
+            "title": "Pengajuan konsultasi baru",
+            "body": "Aisyah Ramadhani mengajukan konsultasi BK.",
+            "read_at": null,
+            "id": 3,
+            "created_at": "2026-05-14 10:24:10"
+        }
+    ],
+    "messages": [
+        {
+            "id": 1,
+            "from_user_id": 3,
+            "to_user_id": 1,
+            "body": "Jangan lupa membawa catatan jadwal belajar besok.",
+            "created_at": "2026-05-14 10:23:28"
+        },
+        {
+            "id": 2,
+            "from_user_id": 2,
+            "to_user_id": 3,
+            "body": "Mohon arahan untuk mendampingi belajar di rumah.",
+            "created_at": "2026-05-14 10:23:28"
+        }
+    ]
+}
